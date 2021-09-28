@@ -82,7 +82,7 @@
 					"from pyspark.sql.functions import col, pandas_udf\r\n",
 					"from pyspark.sql.types import LongType"
 				],
-				"execution_count": 12
+				"execution_count": 1
 			},
 			{
 				"cell_type": "code",
@@ -104,7 +104,7 @@
 					"\r\n",
 					"multiply = pandas_udf(multiply_func, returnType=LongType())"
 				],
-				"execution_count": 13
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
@@ -124,7 +124,7 @@
 					"x = pd.Series([1, 2, 3])\r\n",
 					"print(multiply_func(x, x))"
 				],
-				"execution_count": 14
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
@@ -143,7 +143,7 @@
 					"# Create a Spark DataFrame, 'spark' is an existing SparkSession\r\n",
 					"df = spark.createDataFrame(pd.DataFrame(x, columns=[\"x\"]))"
 				],
-				"execution_count": 15
+				"execution_count": 4
 			},
 			{
 				"cell_type": "code",
@@ -162,7 +162,25 @@
 					"# Execute function as a Spark vectorized UDF\r\n",
 					"df.select(multiply(col(\"x\"), col(\"x\"))).show()"
 				],
-				"execution_count": 16
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
 			}
 		]
 	}

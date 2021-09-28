@@ -52,16 +52,70 @@
 					"import numpy as np\r\n",
 					"import pandas as pd\r\n",
 					"# Enable Arrow-based spark configuration\r\n",
-					"spark.conf.set(“spark.sql.execution.arrow.enabled”, “true”)\r\n",
+					"spark.conf.set('spark.sql.execution.arrow.enabled', 'true')\r\n",
 					"# Generate a pandas DataFrame\r\n",
 					"data = [1,2,3,4,5]\r\n",
 					"pdf = pd.DataFrame(data)\r\n",
 					"# Create a Spark DataFrame from a pandas DataFrame using Arrow\r\n",
 					"df = spark.createDataFrame(pdf)\r\n",
 					"# Convert the Spark DataFrame back to a pandas DataFrame using Arrow\r\n",
-					"final_pdf = df.select(“*”).toPandas()"
+					"final_pdf = df.select('*').toPandas()"
 				],
-				"execution_count": 1
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.show()"
+				],
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"final_pdf.head(5)"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
 			}
 		]
 	}
