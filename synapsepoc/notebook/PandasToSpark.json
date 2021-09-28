@@ -1,0 +1,68 @@
+{
+	"name": "PandasToSpark",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "version3pool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/47a7ec0c-37ad-428b-9114-b87ea1057632/resourceGroups/OneClickSynapse/providers/Microsoft.Synapse/workspaces/mstafv7r34nkygoipocws1/bigDataPools/version3pool",
+				"name": "version3pool",
+				"type": "Spark",
+				"endpoint": "https://mstafv7r34nkygoipocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/version3pool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"import numpy as np\r\n",
+					"import pandas as pd\r\n",
+					"# Enable Arrow-based spark configuration\r\n",
+					"spark.conf.set(“spark.sql.execution.arrow.enabled”, “true”)\r\n",
+					"# Generate a pandas DataFrame\r\n",
+					"data = [1,2,3,4,5]\r\n",
+					"pdf = pd.DataFrame(data)\r\n",
+					"# Create a Spark DataFrame from a pandas DataFrame using Arrow\r\n",
+					"df = spark.createDataFrame(pdf)\r\n",
+					"# Convert the Spark DataFrame back to a pandas DataFrame using Arrow\r\n",
+					"final_pdf = df.select(“*”).toPandas()"
+				],
+				"execution_count": 1
+			}
+		]
+	}
+}

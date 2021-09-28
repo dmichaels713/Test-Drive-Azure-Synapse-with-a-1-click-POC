@@ -1,0 +1,114 @@
+{
+	"name": "MappingFunctions",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "version3pool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/47a7ec0c-37ad-428b-9114-b87ea1057632/resourceGroups/OneClickSynapse/providers/Microsoft.Synapse/workspaces/mstafv7r34nkygoipocws1/bigDataPools/version3pool",
+				"name": "version3pool",
+				"type": "Spark",
+				"endpoint": "https://mstafv7r34nkygoipocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/version3pool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"from pyspark.sql import SparkSession\r\n",
+					"spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()\r\n",
+					"\r\n",
+					"data = [\"Project\",\r\n",
+					"\"Gutenberg’s\",\r\n",
+					"\"Alice’s\",\r\n",
+					"\"Adventures\",\r\n",
+					"\"in\",\r\n",
+					"\"Wonderland\",\r\n",
+					"\"Project\",\r\n",
+					"\"Gutenberg’s\",\r\n",
+					"\"Adventures\",\r\n",
+					"\"in\",\r\n",
+					"\"Wonderland\",\r\n",
+					"\"Project\",\r\n",
+					"\"Gutenberg’s\"]\r\n",
+					"\r\n",
+					"rdd=spark.sparkContext.parallelize(data)\r\n",
+					"\r\n",
+					"rdd2=rdd.map(lambda x: (x,1))\r\n",
+					"for element in rdd2.collect():\r\n",
+					"    print(element)\r\n",
+					"    \r\n",
+					"data = [('James','Smith','M',30),\r\n",
+					"  ('Anna','Rose','F',41),\r\n",
+					"  ('Robert','Williams','M',62), \r\n",
+					"]\r\n",
+					"\r\n",
+					"columns = [\"firstname\",\"lastname\",\"gender\",\"salary\"]\r\n",
+					"df = spark.createDataFrame(data=data, schema = columns)\r\n",
+					"df.show()\r\n",
+					"\r\n",
+					"rdd2=df.rdd.map(lambda x: \r\n",
+					"    (x[0]+\",\"+x[1],x[2],x[3]*2)\r\n",
+					"    )  \r\n",
+					"df2=rdd2.toDF([\"name\",\"gender\",\"new_salary\"]   )\r\n",
+					"df2.show()\r\n",
+					"\r\n",
+					"#Referring Column Names\r\n",
+					"rdd2=df.rdd.map(lambda x: \r\n",
+					"    (x[\"firstname\"]+\",\"+x[\"lastname\"],x[\"gender\"],x[\"salary\"]*2)\r\n",
+					"    ) \r\n",
+					"\r\n",
+					"#Referring Column Names\r\n",
+					"rdd2=df.rdd.map(lambda x: \r\n",
+					"    (x.firstname+\",\"+x.lastname,x.gender,x.salary*2)\r\n",
+					"    ) \r\n",
+					"\r\n",
+					"def func1(x):\r\n",
+					"    firstName=x.firstname\r\n",
+					"    lastName=x.lastname\r\n",
+					"    name=firstName+\",\"+lastName\r\n",
+					"    gender=x.gender.lower()\r\n",
+					"    salary=x.salary*2\r\n",
+					"    return (name,gender,salary)\r\n",
+					"\r\n",
+					"rdd2=df.rdd.map(lambda x: func1(x))"
+				],
+				"execution_count": 1
+			}
+		]
+	}
+}
