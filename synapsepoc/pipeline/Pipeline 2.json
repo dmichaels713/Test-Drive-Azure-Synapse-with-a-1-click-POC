@@ -15,6 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"notebook": {
+						"referenceName": "PandasUDF",
+						"type": "NotebookReference"
+					},
 					"snapshot": true
 				}
 			}
