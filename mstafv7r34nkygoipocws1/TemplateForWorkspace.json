@@ -357,7 +357,6 @@
 				"[concat(variables('workspaceId'), '/datasets/faresDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/faresDataSink')]",
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]"
 			]
 		},
@@ -984,8 +983,8 @@
 						"language": "sql"
 					},
 					"currentConnection": {
-						"databaseName": "msceke53qtirpghypocws1p1",
-						"poolName": "msceke53qtirpghypocws1p1"
+						"databaseName": "mstafv7r34nkygoipocws1p1",
+						"poolName": "mstafv7r34nkygoipocws1p1"
 					},
 					"resultLimit": 5000
 				},
@@ -1034,6 +1033,66 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://mstafv7r34nkygoipoc.dfs.core.windows.net/public/fares-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION='2.0'\n    ) AS [result]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://mstafv7r34nkygoipoc.dfs.core.windows.net/public/trip-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION='2.0'\n    ) AS [result]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://mstafv7r34nkygoipoc.dfs.core.windows.net/public/fares-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION='2.0'\n    ) AS [result]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Data Exploration and ML Modeling - NYC taxi predict using Spark MLlib')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -1067,12 +1126,19 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/47a7ec0c-37ad-428b-9114-b87ea1057632/resourceGroups/SynapseDemo/providers/Microsoft.Synapse/workspaces/msceke53qtirpghypocws1/bigDataPools/ws1sparkpool1",
+						"id": "/subscriptions/47a7ec0c-37ad-428b-9114-b87ea1057632/resourceGroups/OneClickSynapse/providers/Microsoft.Synapse/workspaces/mstafv7r34nkygoipocws1/bigDataPools/ws1sparkpool1",
 						"name": "ws1sparkpool1",
+						"type": "Spark",
+						"endpoint": "https://mstafv7r34nkygoipocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
-						}
+						},
+						"sparkVersion": "2.4",
+						"nodeCount": 5,
+						"cores": 8,
+						"memory": 56,
+						"extraHeader": {}
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1375,7 +1441,7 @@
 							"plt.show()"
 						],
 						"outputs": [],
-						"execution_count": 10
+						"execution_count": null
 					},
 					{
 						"cell_type": "code",
